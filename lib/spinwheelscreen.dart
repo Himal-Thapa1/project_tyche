@@ -55,6 +55,10 @@ class _SpinWheelState extends State<SpinWheel> {
             SizedBox(
               height: 300,
               child: FortuneWheel(
+                physics: CircularPanPhysics(
+                  duration: Duration(seconds: 1),
+                  curve: Curves.decelerate,
+                ),
                 selected: selected.stream,
                 animateFirst: false,
                 items: List<FortuneItem>.generate(
