@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:rxdart/subjects.dart';
 
 class SpinWheel extends StatefulWidget {
   const SpinWheel({super.key});
@@ -11,13 +12,13 @@ class SpinWheel extends StatefulWidget {
 
 class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
-   List<String> rewards = ["erasor", "Pen", "chocolate"];
-
-  List<String> items = ["erasor", "Pen", "chocolate"];
+  final assetAudioPlayer = AssetsAudioPlayer(); // Create AssetAudioPlayer instance
+  List<String> items = ["Eraser", "Pen", "Chocolate"];
 
   @override
   void dispose() {
     selected.close();
+    assetAudioPlayer.dispose(); // Dispose AssetAudioPlayer on widget disposal
     super.dispose();
   }
 
@@ -38,21 +39,35 @@ class _SpinWheelState extends State<SpinWheel> {
                   items.length,
                   (i) => FortuneItem(child: Text(items[i])),
                 ),
-                onAnimationEnd: () {
-                  setState(() {
-                    rewards = items[selected.value] as List<String>;
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("You just won ${rewards[selected.value]}"),
-                    ),
+                onAnimationEnd: () async {
+                  String winItem = items[selected.value];
+                  assetAudioPlayer.open(
+                    Audio('assets/sounds/yay.mp3'),
+                    // autoStart: true,
+                    // showNotification: true,
+                  );
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('You Won!'),
+                        content: Text('Congratulations! You won a $winItem.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              assetAudioPlayer.stop();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
               ),
             ),
-            const SizedBox(
-              height: 60,
-            ),
+            const SizedBox(height: 60),
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -68,7 +83,7 @@ class _SpinWheelState extends State<SpinWheel> {
                 ),
                 child: const Center(
                   child: Text(
-                    "SPIN",
+                    'SPIN',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
