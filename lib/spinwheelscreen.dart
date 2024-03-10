@@ -11,9 +11,9 @@ class SpinWheel extends StatefulWidget {
 
 class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
-  int rewards = 0;
+   List<String> rewards = ["erasor", "Pen", "chocolate"];
 
-  List<int> items = [100, 200, 500, 1000, 2000];
+  List<String> items = ["erasor", "Pen", "chocolate"];
 
   @override
   void dispose() {
@@ -34,18 +34,17 @@ class _SpinWheelState extends State<SpinWheel> {
               child: FortuneWheel(
                 selected: selected.stream,
                 animateFirst: false,
-                items: [
-                  for (int i = 0; i < items.length; i++) ...<FortuneItem>{
-                    FortuneItem(child: Text(items[i].toString())),
-                  },
-                ],
+                items: List<FortuneItem>.generate(
+                  items.length,
+                  (i) => FortuneItem(child: Text(items[i])),
+                ),
                 onAnimationEnd: () {
                   setState(() {
-                    rewards = items[selected.value];
+                    rewards = items[selected.value] as List<String>;
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("You just won $rewards Points!"),
+                      content: Text("You just won ${rewards[selected.value]}"),
                     ),
                   );
                 },
