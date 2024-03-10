@@ -13,9 +13,7 @@ class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
   int rewards = 0;
 
-  List<int> items = [
-    100, 200, 500, 1000, 2000
-  ];
+  List<int> items = [100, 200, 500, 1000, 2000];
 
   @override
   void dispose() {
@@ -37,7 +35,7 @@ class _SpinWheelState extends State<SpinWheel> {
                 selected: selected.stream,
                 animateFirst: false,
                 items: [
-                  for(int i = 0; i < items.length; i++)...<FortuneItem>{
+                  for (int i = 0; i < items.length; i++) ...<FortuneItem>{
                     FortuneItem(child: Text(items[i].toString())),
                   },
                 ],
@@ -53,6 +51,9 @@ class _SpinWheelState extends State<SpinWheel> {
                 },
               ),
             ),
+            const SizedBox(
+              height: 60,
+            ),
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -62,9 +63,19 @@ class _SpinWheelState extends State<SpinWheel> {
               child: Container(
                 height: 40,
                 width: 120,
-                color: Colors.redAccent,
+                decoration: BoxDecoration(
+                  color: Colors.greenAccent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: const Center(
-                  child: Text("SPIN"),
+                  child: Text(
+                    "SPIN",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ),
             ),
