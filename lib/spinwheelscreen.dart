@@ -30,6 +30,15 @@ class _SpinWheelState extends State<SpinWheel> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text("Project Tyche",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
+            const SizedBox(
+              height: 100,
+            ),
             SizedBox(
               height: 300,
               child: FortuneWheel(
