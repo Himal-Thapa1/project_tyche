@@ -13,7 +13,7 @@ class SpinWheel extends StatefulWidget {
 class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
   final assetAudioPlayer = AssetsAudioPlayer(); // Create AssetAudioPlayer instance
-  List<String> items = ["Eraser", "Pen", "Chocolate"];
+  List<String> items = ["Eraser", "Pen", "nothing", "Chocolate", "Sharpener", "nothing"];
 
   @override
   void dispose() {
@@ -43,15 +43,13 @@ class _SpinWheelState extends State<SpinWheel> {
                   String winItem = items[selected.value];
                   assetAudioPlayer.open(
                     Audio('assets/sounds/yay.mp3'),
-                    // autoStart: true,
-                    // showNotification: true,
                   );
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('You Won!'),
-                        content: Text('Congratulations! You won a $winItem.'),
+                        title: Text(winItem == "nothing" ? "Better Luck Next Time" : "Congratulations!"),
+                        content: Text(winItem == "nothing" ? "You won nothing." : "You won $winItem."),
                         actions: [
                           TextButton(
                             onPressed: () {
