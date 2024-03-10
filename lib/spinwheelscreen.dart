@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rxdart/subjects.dart';
 
 class SpinWheel extends StatefulWidget {
@@ -12,8 +13,16 @@ class SpinWheel extends StatefulWidget {
 
 class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
-  final assetAudioPlayer = AssetsAudioPlayer(); // Create AssetAudioPlayer instance
-  List<String> items = ["Eraser", "Pen", "nothing", "Chocolate", "Sharpener", "nothing"];
+  final assetAudioPlayer =
+      AssetsAudioPlayer(); // Create AssetAudioPlayer instance
+  List<String> items = [
+    "Eraser",
+    "Pen",
+    "nothing",
+    "Chocolate",
+    "Sharpener",
+    "nothing"
+  ];
 
   @override
   void dispose() {
@@ -30,12 +39,16 @@ class _SpinWheelState extends State<SpinWheel> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Project Tyche",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),),
+            Text(
+              "Project Tyche",
+              style: GoogleFonts.borel(
+                textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             const SizedBox(
               height: 100,
             ),
@@ -57,8 +70,12 @@ class _SpinWheelState extends State<SpinWheel> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text(winItem == "nothing" ? "Better Luck Next Time" : "Congratulations!"),
-                        content: Text(winItem == "nothing" ? "You won nothing." : "You won $winItem."),
+                        title: Text(winItem == "nothing"
+                            ? "Better Luck Next Time"
+                            : "Congratulations!"),
+                        content: Text(winItem == "nothing"
+                            ? "You won nothing."
+                            : "You won $winItem."),
                         actions: [
                           TextButton(
                             onPressed: () {
