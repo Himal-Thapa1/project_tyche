@@ -4,7 +4,6 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
